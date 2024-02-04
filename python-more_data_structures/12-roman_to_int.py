@@ -12,7 +12,7 @@ def roman_to_int(roman_string):
 
     for i in reversed(roman_string):
         for j in roman_letters:
-            if (i == j[1]):
+            if (i == j[0]):
                 if last > j[1]:
                     s -= j[1]
                 else:
