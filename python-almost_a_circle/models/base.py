@@ -1,14 +1,24 @@
 #!/usr/bin/python3
-"""Base"""
+'''
+Model Documentation
+'''
+
+import json
+import turtle
+
 
 class Base:
-    """Base class"""
+    '''
+    class Documentation
+    '''
     __nb_objects = 0
 
     def __init__(self, id=None):
+        '''
+        Method Documentation
+        '''
+        __class__.__nb_objects += 1
         if id is not None:
             self.id = id
         else:
-            Base.__nb_objects += 1
-            self.id = Base.__nb_objects
-
+            self.id = __class__.__nb_objects
