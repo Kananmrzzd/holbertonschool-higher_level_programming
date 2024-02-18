@@ -12,8 +12,8 @@ class Base:
         '''
         Method Documentation
         '''
-        __class__.__nb_objects += 1
         if id is not None:
             self.id = id
         else:
+            __class__.__nb_objects += 1
             self.id = __class__.__nb_objects
