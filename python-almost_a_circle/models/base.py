@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 class Base:
     """Base class"""
