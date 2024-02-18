@@ -1,15 +1,10 @@
 #!/usr/bin/python3
 '''
-Model Documentation
+Model
 '''
-
-import json
-import turtle
-
-
 class Base:
     '''
-    class Documentation
+    Base class
     '''
     __nb_objects = 0
 
