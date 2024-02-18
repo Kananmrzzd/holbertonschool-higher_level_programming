@@ -1,144 +1,163 @@
 #!/usr/bin/python3
-'''
-Module Documentation
-'''
+"""
+...
+"""
 
 from models.base import Base
 
 
 class Rectangle(Base):
-    '''
-    class Documentation
-    '''
+    """
+    ...
+    """
+
     def __init__(self, width, height, x=0, y=0, id=None):
-        '''
-        Method Documentation
-        '''
+        """
+        ...
+        """
         super().__init__(id)
-        self.width = width
-        self.height = height
-        self.x = x
-        self.y = y
+
+        self.check_integer_parameter(width, 'width')
+        self.check_integer_parameter(height, 'height')
+        self.check_integer_parameter(x, 'x')
+        self.check_integer_parameter(y, 'y')
+
+        self.__width = width
+        self.__height = height
+        self.__x = x
+        self.__y = y
 
     @property
     def width(self):
-        '''
-        Method Documentation
-        '''
+        """
+        ...
+        """
         return self.__width
 
     @width.setter
-    def width(self, value):
-        '''
-        Method Documentation
-        '''
-        if isinstance(value, int) is False:
-            raise TypeError("width must be an integer")
-        if value <= 0:
-            raise ValueError("width must be > 0")
-        self.__width = value
+    def width(self, param):
+        """
+        ...
+        """
+        self.check_integer_parameter(param, 'width')
+
+        self.__width = param
 
     @property
     def height(self):
-        '''
-        Method Documentation
-        '''
+        """
+        ...
+        """
         return self.__height
 
     @height.setter
-    def height(self, value):
-        '''
-        Method Documentation
-        '''
-        if isinstance(value, int) is False:
-            raise TypeError("height must be an integer")
-        if value <= 0:
-            raise ValueError("height must be > 0")
-        self.__height = value
+    def height(self, param):
+        """
+        ...
+        """
+        self.check_integer_parameter(param, 'height')
+
+        self.__height = param
 
     @property
     def x(self):
-        '''
-        Method Documentation
-        '''
+        """
+        ...
+        """
         return self.__x
 
     @x.setter
-    def x(self, value):
-        '''
-        Method Documentation
-        '''
-        if isinstance(value, int) is False:
-            raise TypeError("x must be an integer")
-        if value < 0:
-            raise ValueError("x must be >= 0")
-        self.__x = value
+    def x(self, param):
+        """
+        ...
+        """
+        self.check_integer_parameter(param, 'x')
+
+        self.__x = param
 
     @property
     def y(self):
-        '''
-        Method Documentation
-        '''
+        """
+        ...
+        """
         return self.__y
 
     @y.setter
-    def y(self, value):
-        '''
-        Method Documentation
-        '''
-        if isinstance(value, int) is False:
-            raise TypeError("y must be an integer")
-        if value < 0:
-            raise ValueError("y must be >= 0")
-        self.__y = value
+    def y(self, param):
+        """
+        ...
+        """
+        self.check_integer_parameter(param, 'y')
+
+        self.__y = param
+
+    def check_integer_parameter(self, value, param):
+        """
+        ...
+        """
+        if type(value) is not int:
+            raise TypeError(param + ' must be an integer')
+
+        if value <= 0 and param in ('width', 'height'):
+            raise ValueError(param + ' must be > 0')
+
+        if value < 0 and param in ('x', 'y'):
+            raise ValueError(param + ' must be >= 0')
 
     def area(self):
-        '''
-        Method Documentation
-        '''
-        return self.__height * self.__width
+        """
+        ...
+        """
+        return self.__width * self.__height
 
     def display(self):
-        '''
-        Method Documentation
-        '''
-        x = "#" * self.__width
-        for _ in range(self.__y):
-            print()
-        x_cordnt = " " * self.__x
-        for _ in range(self.__height):
-            print(x_cordnt, x, sep='')
+        """
+        ...
+        """
+        if self.__y > 0:
+            print('\n' * self.__y, end='')
+
+        for i in range(self.height):
+            if self.__x > 0:
+                print(' ' * self.__x, end='')
+
+            print('#' * self.__width)
 
     def __str__(self):
-        '''
-        Method Documentation
-        '''
-        return f"[Rectangle] ({self.id}) \
-{self.x}/{self.y} - {self.width}/{self.height}"
+        """
+        ...
+        """
+        return '[Rectangle] ({:d}) {:d}/{:d} - {:d}/{:d}'.format(
+            self.id, self.x, self.y, self.width, self.height
+        )
 
     def update(self, *args, **kwargs):
-        '''
-        Method Documenta
-        '''
-        if args:
-            arr = ["id", "_Rectangle__width", "_Rectangle__height",
-                   "_Rectangle__x", "_Rectangle__y"]
-            for i in range(min(len(args), 5)):
-                self.__dict__[arr[i]] = args[i]
+        """
+        ...
+        """
+        argc = len(args)
+        kwargc = len(kwargs)
+        modif_attrs = ['id', 'width', 'height', 'x', 'y']
 
-        elif kwargs:
-            for key, value in kwargs.items():
-                setattr(self, key, value)
+        if argc > 5:
+            argc = 5
+
+        if argc > 0:
+            for i in range(argc):
+                setattr(self, modif_attrs[i], args[i])
+        elif kwargc > 0:
+            for k, v in kwargs.items():
+                if k in modif_attrs:
+                    setattr(self, k, v)
 
     def to_dictionary(self):
-        '''
-        Method Documentation
-        '''
-        dictionary = {
-                "id": self.id,
-                "width": self.width,
-                "height": self.height,
-                "x": self.x,
-                "y": self.y
-                }
-        return dictionary
+        """
+        ...
+        """
+        return {
+            'id': self.id,
+            'width': self.width,
+            'height': self.height,
+            'x': self.x,
+            'y': self.y
+        }
